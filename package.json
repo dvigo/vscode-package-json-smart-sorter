@@ -1,0 +1,155 @@
+{
+  "name": "vscode-package-json-smart-sorter",
+  "displayName": "Package.json Smart Sorter",
+  "description": "Intelligently sort dependencies and scripts in package.json files.",
+  "version": "1.0.0",
+  "publisher": "dvigo",
+  "author": "dvigo",
+  "icon": "icon2.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvigo/vscode-package-json-smart-sorter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dvigo/vscode-package-json-smart-sorter/issues"
+  },
+  "homepage": "https://github.com/dvigo/vscode-package-json-smart-sorter#readme",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:json",
+    "onCommand:smartSorter.sortCurrentFile",
+    "onCommand:smartSorter.sortAllSections",
+    "onCommand:smartSorter.sortDepsOnly",
+    "onCommand:smartSorter.sortDevDepsOnly",
+    "onCommand:smartSorter.sortPeerDepsOnly",
+    "onCommand:smartSorter.sortScriptsOnly"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "smartSorter.sortCurrentFile",
+        "title": "Sort Configured Sections",
+        "category": "Smart Sorter"
+      },
+      {
+        "command": "smartSorter.sortAllSections",
+        "title": "Sort All Sections",
+        "category": "Smart Sorter"
+      },
+      {
+        "command": "smartSorter.sortDepsOnly",
+        "title": "Sort Dependencies Only",
+        "category": "Smart Sorter"
+      },
+      {
+        "command": "smartSorter.sortDevDepsOnly",
+        "title": "Sort DevDependencies Only",
+        "category": "Smart Sorter"
+      },
+      {
+        "command": "smartSorter.sortPeerDepsOnly",
+        "title": "Sort PeerDependencies Only",
+        "category": "Smart Sorter"
+      },
+      {
+        "command": "smartSorter.sortScriptsOnly",
+        "title": "Sort Scripts Only",
+        "category": "Smart Sorter"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "smartSorter.submenu",
+        "label": "Smart Sorter"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "smartSorter.submenu",
+          "when": "resourceFilename == package.json",
+          "group": "modification"
+        }
+      ],
+      "smartSorter.submenu": [
+        {
+          "command": "smartSorter.sortCurrentFile",
+          "group": "1_main@1"
+        },
+        {
+          "command": "smartSorter.sortAllSections",
+          "group": "1_main@2"
+        },
+        {
+          "command": "smartSorter.sortDepsOnly",
+          "group": "2_sections@1"
+        },
+        {
+          "command": "smartSorter.sortDevDepsOnly",
+          "group": "2_sections@2"
+        },
+        {
+          "command": "smartSorter.sortPeerDepsOnly",
+          "group": "2_sections@3"
+        },
+        {
+          "command": "smartSorter.sortScriptsOnly",
+          "group": "2_sections@4"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Package.json Smart Sorter",
+      "properties": {
+        "smartSorter.sortDependencies": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sort the 'dependencies' section of package.json files."
+        },
+        "smartSorter.sortDevDependencies": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sort the 'devDependencies' section of package.json files."
+        },
+        "smartSorter.sortPeerDependencies": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sort the 'peerDependencies' section of package.json files."
+        },
+        "smartSorter.sortScripts": {
+          "type": "boolean",
+          "default": false,
+          "description": "Sort the 'scripts' section of package.json files."
+        },
+        "smartSorter.groupScopes": {
+          "type": "string",
+          "enum": [
+            "top",
+            "bottom",
+            "inline"
+          ],
+          "default": "inline",
+          "description": "How to group scoped dependencies (starting with '@') when sorting dependencies, devDependencies, and peerDependencies."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "node out/test/runTests.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.74.0",
+    "typescript": "^5.0.0"
+  }
+}
