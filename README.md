@@ -1,5 +1,9 @@
 # Package.json Smart Sorter
 
+<p align="center">
+  <img src="icon2.png" width="128" height="128" alt="Package.json Smart Sorter Logo">
+</p>
+
 [![Visual Studio Marketplace](https://img.shields.io/vscode-marketplace/v/dvigo.vscode-package-json-smart-sorter.svg?label=Marketplace&color=blue)](https://marketplace.visualstudio.com/items?itemName=dvigo.vscode-package-json-smart-sorter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
