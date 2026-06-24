@@ -2,7 +2,7 @@
   "name": "vscode-package-json-smart-sorter",
   "displayName": "Package.json Smart Sorter",
   "description": "Intelligently sort dependencies and scripts in package.json files.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "dvigo",
   "author": "dvigo",
   "icon": "icon2.png",
@@ -29,7 +29,8 @@
     "onCommand:smartSorter.sortDepsOnly",
     "onCommand:smartSorter.sortDevDepsOnly",
     "onCommand:smartSorter.sortPeerDepsOnly",
-    "onCommand:smartSorter.sortScriptsOnly"
+    "onCommand:smartSorter.sortScriptsOnly",
+    "onCommand:smartSorter.sortOverridesOnly"
   ],
   "contributes": {
     "commands": [
@@ -61,6 +62,11 @@
       {
         "command": "smartSorter.sortScriptsOnly",
         "title": "Sort Scripts Only",
+        "category": "Smart Sorter"
+      },
+      {
+        "command": "smartSorter.sortOverridesOnly",
+        "title": "Sort Overrides Only",
         "category": "Smart Sorter"
       }
     ],
@@ -102,6 +108,10 @@
         {
           "command": "smartSorter.sortScriptsOnly",
           "group": "2_sections@4"
+        },
+        {
+          "command": "smartSorter.sortOverridesOnly",
+          "group": "2_sections@5"
         }
       ]
     },
@@ -127,6 +137,16 @@
           "type": "boolean",
           "default": false,
           "description": "Sort the 'scripts' section of package.json files."
+        },
+        "smartSorter.sortOverrides": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sort the 'overrides' section of package.json files."
+        },
+        "smartSorter.sortPnpmOverrides": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sort the 'pnpm.overrides' section of package.json files."
         },
         "smartSorter.groupScopes": {
           "type": "string",

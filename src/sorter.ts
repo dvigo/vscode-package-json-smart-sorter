@@ -3,6 +3,8 @@ export interface SorterOptions {
   sortDevDependencies: boolean;
   sortPeerDependencies: boolean;
   sortScripts: boolean;
+  sortOverrides: boolean;
+  sortPnpmOverrides: boolean;
   groupScopes: 'top' | 'bottom' | 'inline';
 }
 
@@ -95,6 +97,29 @@ export function sortPackageJson(
       !Array.isArray(data.scripts)
     ) {
       data.scripts = sortObjectKeys(data.scripts, 'inline');
+    }
+
+    // Sort overrides if enabled and exists as an object
+    if (
+      options.sortOverrides &&
+      data.overrides &&
+      typeof data.overrides === 'object' &&
+      !Array.isArray(data.overrides)
+    ) {
+      data.overrides = sortObjectKeys(data.overrides, options.groupScopes);
+    }
+
+    // Sort pnpm.overrides if enabled and exists as an object
+    if (
+      options.sortPnpmOverrides &&
+      data.pnpm &&
+      typeof data.pnpm === 'object' &&
+      !Array.isArray(data.pnpm) &&
+      data.pnpm.overrides &&
+      typeof data.pnpm.overrides === 'object' &&
+      !Array.isArray(data.pnpm.overrides)
+    ) {
+      data.pnpm.overrides = sortObjectKeys(data.pnpm.overrides, options.groupScopes);
     }
   }
 

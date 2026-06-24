@@ -11,9 +11,12 @@ function getSorterOptions(): SorterOptions {
     sortDevDependencies: config.get<boolean>('sortDevDependencies', true),
     sortPeerDependencies: config.get<boolean>('sortPeerDependencies', true),
     sortScripts: config.get<boolean>('sortScripts', false),
+    sortOverrides: config.get<boolean>('sortOverrides', true),
+    sortPnpmOverrides: config.get<boolean>('sortPnpmOverrides', true),
     groupScopes: config.get<'top' | 'bottom' | 'inline'>('groupScopes', 'inline')
   };
 }
+
 
 /**
  * Helper to run the sorting process with optional settings overrides.
@@ -113,7 +116,9 @@ export function activate(context: vscode.ExtensionContext) {
         sortDependencies: true,
         sortDevDependencies: true,
         sortPeerDependencies: true,
-        sortScripts: true
+        sortScripts: true,
+        sortOverrides: true,
+        sortPnpmOverrides: true
       });
     }
   });
@@ -125,7 +130,9 @@ export function activate(context: vscode.ExtensionContext) {
         sortDependencies: true,
         sortDevDependencies: false,
         sortPeerDependencies: false,
-        sortScripts: false
+        sortScripts: false,
+        sortOverrides: false,
+        sortPnpmOverrides: false
       });
     }
   });
@@ -137,7 +144,9 @@ export function activate(context: vscode.ExtensionContext) {
         sortDependencies: false,
         sortDevDependencies: true,
         sortPeerDependencies: false,
-        sortScripts: false
+        sortScripts: false,
+        sortOverrides: false,
+        sortPnpmOverrides: false
       });
     }
   });
@@ -149,7 +158,9 @@ export function activate(context: vscode.ExtensionContext) {
         sortDependencies: false,
         sortDevDependencies: false,
         sortPeerDependencies: true,
-        sortScripts: false
+        sortScripts: false,
+        sortOverrides: false,
+        sortPnpmOverrides: false
       });
     }
   });
@@ -161,7 +172,23 @@ export function activate(context: vscode.ExtensionContext) {
         sortDependencies: false,
         sortDevDependencies: false,
         sortPeerDependencies: false,
-        sortScripts: true
+        sortScripts: true,
+        sortOverrides: false,
+        sortPnpmOverrides: false
+      });
+    }
+  });
+
+  const sortOverridesCommand = vscode.commands.registerCommand('smartSorter.sortOverridesOnly', () => {
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+      runSortCommand(editor, {
+        sortDependencies: false,
+        sortDevDependencies: false,
+        sortPeerDependencies: false,
+        sortScripts: false,
+        sortOverrides: true,
+        sortPnpmOverrides: true
       });
     }
   });
@@ -173,7 +200,8 @@ export function activate(context: vscode.ExtensionContext) {
     sortDepsCommand,
     sortDevDepsCommand,
     sortPeerDepsCommand,
-    sortScriptsCommand
+    sortScriptsCommand,
+    sortOverridesCommand
   );
 }
 

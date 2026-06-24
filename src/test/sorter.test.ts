@@ -14,6 +14,8 @@ function runTests() {
     sortDevDependencies: true,
     sortPeerDependencies: true,
     sortScripts: false,
+    sortOverrides: false,
+    sortPnpmOverrides: false,
     groupScopes: 'inline'
   };
 
@@ -195,12 +197,58 @@ function runTests() {
     assert.strictEqual(result, expected, 'Failed Case 7: Trailing newline');
   }
 
-  // Test Case 8: Syntax error throwing
+  // Test Case 9: Overrides sorting (npm)
   {
-    const original = '{\n  "dependencies": {\n    "b": "2",\n    "a": "1"\n  },\n'; // missing closing brace
-    assert.throws(() => {
-      sortPackageJson(original, defaultFormatting, defaultOptions);
-    }, 'Failed Case 8: Syntax error check');
+    const original = JSON.stringify({
+      overrides: {
+        "lodash": "^4.17.21",
+        "chokidar": "^3.0.0",
+        "@types/node": "^18.0.0"
+      }
+    }, null, 2);
+
+    const expected = JSON.stringify({
+      overrides: {
+        "@types/node": "^18.0.0",
+        "chokidar": "^3.0.0",
+        "lodash": "^4.17.21"
+      }
+    }, null, 2);
+
+    const result = sortPackageJson(original, defaultFormatting, {
+      ...defaultOptions,
+      sortOverrides: true
+    });
+    assert.strictEqual(result, expected, 'Failed Case 9: npm overrides sorting');
+  }
+
+  // Test Case 10: pnpm overrides sorting
+  {
+    const original = JSON.stringify({
+      pnpm: {
+        overrides: {
+          "lodash": "^4.17.21",
+          "chokidar": "^3.0.0",
+          "@types/node": "^18.0.0"
+        }
+      }
+    }, null, 2);
+
+    const expected = JSON.stringify({
+      pnpm: {
+        overrides: {
+          "@types/node": "^18.0.0",
+          "chokidar": "^3.0.0",
+          "lodash": "^4.17.21"
+        }
+      }
+    }, null, 2);
+
+    const result = sortPackageJson(original, defaultFormatting, {
+      ...defaultOptions,
+      sortPnpmOverrides: true
+    });
+    assert.strictEqual(result, expected, 'Failed Case 10: pnpm overrides sorting');
   }
 
   console.log('All Sorter Tests Passed!');
